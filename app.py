@@ -2,7 +2,7 @@ import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # Updated imports to fix deprecation warnings
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain.indexes import VectorstoreIndexCreator
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -24,7 +24,7 @@ def load_pdf():
     
     loaders = [PyPDFLoader(pdf_name)]
     index = VectorstoreIndexCreator(
-        embedding=HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2'),
+        embedding=OpenAIEmbeddings(),
         text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     ).from_loaders(loaders)
     return index
