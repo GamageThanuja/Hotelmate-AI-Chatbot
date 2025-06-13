@@ -54,7 +54,11 @@ def main():
     print("How can I assist you today? (Type 'exit' to quit)")
 
     while True:
-        prompt = input("You: ").strip()
+        try:
+            prompt = input("You: ").strip()
+        except EOFError:
+            print("\n❌ Input stream closed. Exiting gracefully.")
+            break
         if prompt.lower() == 'exit':
             print("Goodbye!")
             break
